@@ -11,12 +11,12 @@ app.use(express.json());
 
 
 
-app.get("/", (req, res)=>{
+app.get("/api", (req, res)=>{
     res.send("Este es mi servidor en Express"); 
 });
 
 
-app.get("/otraRuta", (req, res)=>{
+app.get("/api/otraRuta", (req, res)=>{
     res.send("Mi otra tienda en Express"); 
 });
 
