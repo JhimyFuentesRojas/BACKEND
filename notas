@@ -1,0 +1,77 @@
+
+
+/*
+app.get("/:id", (req, res)=>{
+    res.send(`Id ingresado: ${req.params.id}`);
+});
+*/
+app.get("/json/product", (req, res) =>{
+     const products = [
+        { name: "Product 1", price: 15 },
+        { name: "Product 2", price: 23 },
+        { name: "Product 3", price: 30 }
+    ];
+    res.json(products);
+})
+
+//Get:. Resibir parametros
+/*
+app.get('/product', (req, res)=>{
+    res.json([
+        { name: "Product 1", price: 15 },
+        { name: "Product 2", price: 23 },
+        { name: "Product 3", price: 30 }
+    ])
+})
+*/
+
+
+
+
+
+
+// Get Parametros con Query
+// api.example.com/products
+// api.example.com/products?page=1
+// api.example.com/products?page=1&limit=10&offset=0
+// api.example.com/products?region=USA
+// api.example.com/products?region=USA&BRAND=xyz
+
+
+
+
+
+app.get('/products', (req, res) => {
+    const products = [];
+    for (let index = 0; index < 100; index++) {
+        products.push({
+            name: faker.commerce.productName(),
+            price: parseInt(faker.commerce.price()),
+            image: faker.image.imageUrl()
+        });
+    }
+    res.status(200).json(products);
+});
+
+
+app.get('/books', (req, res) => {
+    const {limit, offset} =req.query;
+    const books = [];
+    if (limit && offset) {
+        for (let i = 0; i < limit; i++) {
+            books.push({
+                title: faker.lorem.words(),
+                author: faker.name.findName(),
+                genre: faker.lorem.word(),
+                publishedYear: faker.date.past(50).getFullYear()
+            });
+        }
+        res.status(200).json({
+            limit: Number(limit),
+            offset: Number(offset),
+            books
+        });
+    } else {
+        res.status(400).send('No hay Parametros o Parametros no validos');
+    }
+});
